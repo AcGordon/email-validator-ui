@@ -26,16 +26,23 @@ public class MyUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         final VerticalLayout layout = new VerticalLayout();
         
-        final TextField name = new TextField();
-        name.setCaption("Type your name here:");
-
+        final TextField email_box = new TextField();
+        email_box.setCaption("Type your email here:");
+        
+        Label success = new Label("This is a valid email! :)");
+        Label failure = new Label("This is not a valid email. :(");
+        
         Button button = new Button("Click Me");
         button.addClickListener( e -> {
-            layout.addComponent(new Label("Thanks " + name.getValue() 
-                    + ", it works!"));
+        	layout.removeComponent(success);
+        	layout.removeComponent(failure);
+        	if(Validator.validateEmail(email_box.getValue()))
+        		layout.addComponent(success);
+        	else
+        		layout.addComponent(failure);
         });
         
-        layout.addComponents(name, button);
+        layout.addComponents(email_box, button);
         layout.setMargin(true);
         layout.setSpacing(true);
         
